@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
 //Function Scope
 function runGame() {
 // Local Scope
+    let num1 = Math.floor(Math.random() * 25) + 1;
+    let num2 = Math.floor(Math.random() * 25) + 1;
 }
 
 //Function Scope
