@@ -73,9 +73,11 @@ function checkAnswer(){
     // If the answer is correct, this message will be displayed...
     if (isCorrect) {
         alert("Hey! You got it right! :D");
+        incrementScore();
       // ... whereas if the answer is incorrect, this message will be displayed instead
     } else {
         alert(`Awwww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
+        incrementWrongAnswer();
     }
     // Executes another game based on the second element of the returned array ("addition")
     runGame(calculatedAnswer[1]);
@@ -113,13 +115,29 @@ function calculateCorrectAnswer() {
 }
 
 //Function Scope
+
+/**
+ * Retrieves the current score from the DOM and increments it by 1
+ */
 function incrementScore() {
 // Local Scope
+    // Retrieves the element with the ID of "score"
+    let oldScore = parseInt(document.getElementById("score").innerText);
+    // Increments the score by 1
+    document.getElementById("score").innerText = ++oldScore;
 }
 
 //Function Scope
+
+/**
+ * Retrieves the current tally of incorrect answers from the DOM and increments it by 1
+ */
 function incrementWrongAnswer() {
 // Local Scope
+    // Retrieves the element with the ID of "score"
+    let oldScore = parseInt(document.getElementById("incorrect").innerText);
+    // Increments the score by 1
+    document.getElementById("incorrect").innerText = ++oldScore;
 }
 
 //Function Scope
