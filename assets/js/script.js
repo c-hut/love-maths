@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener("click", function() {
             // If the Submit button is clicked...
             if (this.getAttribute("data-type") === "submit") {
-                //... sends an alert to the user letting them know that they clicked the Submit button (visible at the top of the page)
-                alert("You clicked Submit!");
+                //... the check answer function is executed
+                checkAnswer();
               // If any of the other buttons are clicked...
             } else {
                 // Lets the event listener know that it should run a game when one of the remaining buttons is clicked...
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // The runGame function is passed to the event listener and the "addition" variable is passed along with it
     runGame("addition");
 
-})
+});
 
 
 //Function Scope
@@ -56,13 +56,60 @@ function runGame(gameType) {
 }
 
 //Function Scope
+
+/**
+ * Checks the answer against the first element [0]
+ * located in the returned array which has been 
+ * assigned to the 'calculateCorrectAnswer' array
+ */
 function checkAnswer(){
 // Local Scope
+    // .value is used to retrieve the user input from the DOM, and parseInt() is used to ensure the value is treated as an integer
+    let userAnswer = parseInt(document.getElementById("answer-box").value);
+    // The correct answer is retrieved from the 'calculateCorrectAnswer() function
+    let calculatedAnswer = calculateCorrectAnswer();
+    // The answer input by the user is compared with the correct answer (via strict comparison and string indexing)
+    let isCorrect = userAnswer === calculatedAnswer[0];
+    // If the answer is correct, this message will be displayed...
+    if (isCorrect) {
+        alert("Hey! You got it right! :D");
+      // ... whereas if the answer is incorrect, this message will be displayed instead
+    } else {
+        alert(`Awwww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
+    }
+    // Executes another game based on the second element of the returned array ("addition")
+    runGame(calculatedAnswer[1]);
 }
 
 //Function Scope
+
+/**
+ * Retrieves the operands (the numbers) and the operator (plus, minus, divide or subtract symbol)
+ * directly from the DOM; the correct answer is then returned.
+ */
 function calculateCorrectAnswer() {
 // Local Scope
+    // parseInt() is used to ensure the retrieved values are treated as integers and not any other data type
+    let operand1 = parseInt(document.getElementById("operand1").innerText);
+    let operand2 = parseInt(document.getElementById("operand2").innerText);
+    let operator = document.getElementById("operator").innerText;
+    // Checks whether the operator in question is the '+' sign...
+    if (operator === "+") {
+        //... if so, the correct answer will be calculated and an array containing the correct answer (element 1) and the subsequent game type (element 2)
+        
+        return [operand1 + operand2, "addition"];
+        /**
+         * Return syntax breakdown:
+         * -> operand1 = randomly generated number
+         * -> operand2 = randomly generated number
+         * -> game type to be executed next: addition
+         */
+    } else {
+        // If there's an error, the code execution will stop...
+        alert(`Unimplemented operator ${operator}`);
+        // ... and it will throw an error
+        throw `Unimplemented operator ${operator}. Aborting!`;
+    }
 }
 
 //Function Scope
@@ -78,6 +125,7 @@ function incrementWrongAnswer() {
 //Function Scope
 function displayAdditionQuestion(operand1, operand2) {
 // Local Scope
+    // Accesses the HTML IDs which correspond to the two values and the operator betwist them
     document.getElementById("operand1").textContent = operand1;
     document.getElementById("operand2").textContent = operand2;
     document.getElementById("operator").textContent = "+";
