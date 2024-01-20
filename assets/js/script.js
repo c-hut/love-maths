@@ -20,11 +20,18 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         })
     }
+    // Listens for a key press performed by the user; in this case, it's the enter button
+    document.getElementById("answer-box").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            // If the 'Enter' button is pressed, the checkAnswer() function will be called, and its code will be executed
+            checkAnswer();
+        }
+    })
+
     // The runGame function is passed to the event listener and the "addition" variable is passed along with it
     runGame("addition");
 
 });
-
 
 //Function Scope
 
@@ -37,6 +44,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function runGame(gameType) {
 // Local Scope
+    // Removes the previous answer from the input field
+    document.getElementById("answer-box").value = "";
+    // Keeps the cursor in the input field after an answer has been submitted
+    document.getElementById("answer-box").focus();
     // Creates two random numbers between 1 and 25, respectively
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
